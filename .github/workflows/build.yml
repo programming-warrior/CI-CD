@@ -1,0 +1,26 @@
+name: CI pipeline for github workflow
+on:
+  pull-request:
+    branches:
+      -master
+      -main
+
+jobs:
+  build:  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: action/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: migrate database
+        run: npm run db:migrate
+
+      - name: Build 
+        run: npm build
